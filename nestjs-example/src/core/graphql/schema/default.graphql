@@ -1,0 +1,9 @@
+"""
+Root query
+"""
+type Query
+
+"""
+Root mutation
+"""
+type Mutation

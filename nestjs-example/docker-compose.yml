@@ -1,0 +1,43 @@
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8
+    cap_add:
+      - SYS_NICE
+    environment:
+      MYSQL_DATABASE: 'template'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      TZ: 'Asia/Seoul'
+    ports:
+      - '3308:3306'
+    volumes:
+      - ./mysql/mysql_data:/var/lib/mysql
+      - ./mysql/sqls/:/docker-entrypoint-initdb.d/
+    networks:
+      - server_test
+
+  redis:
+    container_name: redis
+    image: redis:alpine
+    ports:
+      - '6379:6379'
+    networks:
+      - server_test
+
+  server:
+    container_name: server
+    build:
+      context: ./
+      dockerfile: dockerfile-local
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./src:/app/src
+    env_file:
+      - ./.env.docker
+    networks:
+      - server_test
+
+networks:
+  server_test:
+    driver: bridge

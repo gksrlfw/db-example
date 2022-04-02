@@ -1,0 +1,8 @@
+"""
+댓글
+"""
+type Comment {
+    id: Int
+    content: String
+    postId: Int
+}

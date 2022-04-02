@@ -1,0 +1,12 @@
+"""
+유저
+"""
+type Post {
+    id: Int
+    title: String
+    content: String
+    createdAt: CtDatetime
+    updatedAt: CtDatetime
+    userId: Int
+    comments: [Comment]
+}

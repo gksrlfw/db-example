@@ -1,0 +1,12 @@
+"""
+유저
+"""
+type User {
+    id: String
+    name: String
+    age: Int
+    createdAt: CtDatetime
+    updatedAt: CtDatetime
+    token: String
+    posts: [Post]
+}

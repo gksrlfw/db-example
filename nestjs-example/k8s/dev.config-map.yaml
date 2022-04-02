@@ -1,0 +1,14 @@
+# github 에 올리면 안됩니다. 또는 secret 을 이용해야합니다.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: dev
+  name: template-configmap
+data:
+  # 숫자에서 에러 발생: cannot convert int64 to string
+  MYSQL_HOST: "mysql-ip"
+  REDIS_HOST: "redis-ip"
+  REDIS_PORT: "6379"
+  ACCESS_SECRET: "JWT"
+  REFRESH_SECRET: "JWT"
+

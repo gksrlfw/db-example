@@ -1,0 +1,70 @@
+name: unit-test
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          # TODO MYSQL_ALLOW_EMPTY_PASSWORD 옵션을 사용해봅시다.
+          MYSQL_DATABASE: 'template'
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306
+        # TODO
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      # timezone 설정
+      - name: Set timezone
+        uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: "Asia/Seoul"
+          timezoneMacos: "Asia/Seoul"
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # mysql 을 실행합니다.
+      # TODO seed data 를 어떻게 넣을지 고민해야합니다.
+      - name: Connect to mysql
+        run: |
+          sudo apt-get install -y mysql-client
+          sudo service mysql start
+          mysql -h 127.0.0.1 --port 3306 -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS template default charset=utf8 collate utf8_general_ci;'
+
+      - name: Use Nodejs ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # github secret 을 이용해서 .env 파일을 만든다.
+      - name: Generate Env file
+        run: |
+          touch .env.test
+          echo MYSQL_HOST=${{ secrets.MYSQL_HOST }} >> .env.test
+          echo MYSQL_PORT=${{ secrets.MYSQL_PORT }} >> .env.test
+          echo MYSQL_USER=${{ secrets.MYSQL_USER }} >> .env.test
+          echo MYSQL_USER_PASSWORD=${{ secrets.MYSQL_USER_PASSWORD }} >> .env.test
+          echo APP_ENV=${{ secrets.APP_ENV }} >> .env.test
+          cat .env.test
+
+      - name: Install dependencies
+        run: npm install
+
+      # 테스트를 수행합니다.
+      - name: Run tests
+        run: npm run test

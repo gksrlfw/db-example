@@ -1,0 +1,9 @@
+"""
+String yyyy-MM-dd
+"""
+scalar CtDate
+
+"""
+String RFC3339
+"""
+scalar CtDatetime

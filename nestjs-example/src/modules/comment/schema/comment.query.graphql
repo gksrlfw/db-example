@@ -1,0 +1,7 @@
+extend type Query {
+    """
+    댓글정보를 가져옵니다.
+    """
+    getComments: [Comment]!
+
+}

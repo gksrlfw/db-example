@@ -1,0 +1,15 @@
+"""
+"""
+input JoinInput {
+    id: String!
+    password: String!
+    name: String!
+    age: Int!
+}
+
+"""
+"""
+input LoginInput {
+    id: String!
+    password: String!
+}

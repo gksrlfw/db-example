@@ -1,0 +1,11 @@
+input CreatePostInput {
+    userId: String!
+    title: String!
+    content: String!
+}
+
+input UpdatePostInput {
+    id: Int!
+    title: String!
+    content: String!
+}

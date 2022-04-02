@@ -1,0 +1,4 @@
+extend type Mutation {
+    join(input: JoinInput!): User!
+    login(input: LoginInput!): User!
+}

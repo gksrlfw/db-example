@@ -1,0 +1,4 @@
+input CreateUserInput {
+    name: String!
+    age: Int!
+}

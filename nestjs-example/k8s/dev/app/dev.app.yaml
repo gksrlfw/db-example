@@ -1,0 +1,53 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: dev
+  name: template
+  labels:
+    app: template
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: template
+  template:
+    metadata:
+      namespace: dev
+      labels:
+        app: template
+    spec:
+      containers:
+        - name: template
+          image: gksrlfw/template:0.0.2
+          ports:
+            - containerPort: 3000
+          env:
+            - name: APP_ENV
+              value: "dev"
+            - name: NODE_ENV
+              value: "development"
+            - name: MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: template-configmap
+                  key: MYSQL_HOST
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: template-configmap
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: template-configmap
+                  key: REDIS_PORT
+            - name: ACCESS_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: template-configmap
+                  key: ACCESS_SECRET
+            - name: REFRESH_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: template-configmap
+                  key: REFRESH_SECRET

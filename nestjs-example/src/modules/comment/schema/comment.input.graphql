@@ -1,0 +1,4 @@
+input CreateCommentInput {
+    postId: Int!
+    content: String!
+}
