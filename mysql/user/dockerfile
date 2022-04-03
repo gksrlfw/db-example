@@ -1,0 +1,14 @@
+FROM mysql:8
+
+MAINTAINER cola
+
+# 만약 커스텀하게 설정하고 싶은 설정이 있다면 아래 파일을 만들어야 합니다.
+ADD ./sqls /docker-entrypoint-initdb.d
+
+# permission denied 에러 해결
+RUN chmod -R 775 /docker-entrypoint-initdb.d
+
+EXPOSE 4406
+
+#
+CMD ["mysqld"]
