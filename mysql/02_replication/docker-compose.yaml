@@ -1,0 +1,39 @@
+version: '3.3'
+
+services:
+  db-master:
+    container_name: db-master
+    image: db-master
+    volumes:
+      - ./master/configs/:/etc/mysql/conf.d
+      - ./master/sqls/:/docker-entrypoint-initdb.d/
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'example'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - '4406:3306'
+    networks:
+      - replication_test
+
+  db-slave:
+    container_name: db-slave
+    image: db-slave
+    volumes:
+      - ./slave/configs/:/etc/mysql/conf.d
+      - ./slave/sqls/:/docker-entrypoint-initdb.d/
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'example'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - '5506:3306'
+    networks:
+      - replication_test
+# network 로 대체합니다.
+#    links:
+#      - db-master
+
+networks:
+  replication_test:
+    driver: bridge
