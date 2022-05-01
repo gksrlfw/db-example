@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+  db:
+    container_name: example
+    image: example
+    volumes:
+#      - ./mysql_data:/var/lib/mysql
+      - ./sqls/:/docker-entrypoint-initdb.d/
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'ex'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - '4406:3306'
