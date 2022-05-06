@@ -1,0 +1,6 @@
+query getSites(
+    $from: DateTime!
+    $to: DateTime!
+) {
+#    query.
+}

@@ -1,0 +1,50 @@
+# https://docs-nine-inky.vercel.app/docs/guides/guides/test-script-reference
+config:
+
+  # 환경변수가 없을때 default 로 실행됩니다.
+  target: 'http://localhost:3001'
+  phases:
+    - duration: 10
+      arrivalRate: 8    # virtual users
+      name: 'Stress test: arrival rate'
+
+  # Responses have to be sent within 10 seconds, or an `ETIMEDOUT` error gets raised.
+  http:
+    # default: 10 seconds.
+    timeout: 10
+
+  payload:
+    # path is relative to the location of the test script
+    path: '../seeds/mobiles.csv'
+    fields:
+      - 'mobile'
+    order: 'sequence'
+
+  environments:
+    local:
+      target: 'http://localhost:3001'
+      phases:
+        - duration: 10
+          arrivalRate: 1
+
+  processor: '../processor.js'
+
+scenarios:
+  - name: 'Stress test: getSites'
+    flow:
+      - function: 'GetSitesTest'
+      - loop:
+          - post:
+              headers:
+                authorization: '0{{ mobile }}'       # 숫자로 인식되어 0 이 사라지는것같습니다.
+                Content-Type: 'application/json'
+              url: '/graphql'
+              json:
+                query: '{{ $loopElement.query }}'
+                variables: '{{ $loopElement.variables }}'
+
+          - log: '----------------------------------'
+          - log: 'Sent a request to the {{ $loopElement.operation }}: {{ $loopElement.name }}'
+          - log: 'And variables {{ $loopElement.variables }}'
+
+        over: cases   # ??

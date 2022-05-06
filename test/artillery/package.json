@@ -1,0 +1,20 @@
+{
+  "name": "stress-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "processor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "artillery": "^2.0.0-15",
+    "easygraphql-now": "0.0.7"
+  },
+  "dependencies": {
+    "easygraphql-load-tester": "^2.0.5",
+    "merge-graphql-schemas": "^1.7.8"
+  }
+}
