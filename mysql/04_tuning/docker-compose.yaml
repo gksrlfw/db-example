@@ -1,0 +1,12 @@
+version: '3.3'
+
+services:
+  db-master:
+    container_name: example
+    image: example
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'example'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - '4406:3306'
