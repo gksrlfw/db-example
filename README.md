@@ -1,8 +1,5 @@
-# 
-학습한 내용을 기록합니다. 
-
-모든 실습은 docker 환경에서 진행됩니다.
-
+# Study.
+학습한 내용을 기록합니다.
 
 ### cls (Continuation-Local Storage)
 cls 활용 관련 코드입니다.

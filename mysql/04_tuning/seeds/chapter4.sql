@@ -505,6 +505,7 @@ WHERE CONCAT(성별,' ',성) = 'M Radwan';
 SELECT CONCAT(성별,' ',성) '성별_성', COUNT(1)
 FROM 사원
 WHERE CONCAT(성별,' ',성) = 'M Radwan'
+GROUP BY CONCAT(성별,' ',성)
 
 UNION ALL
 
