@@ -1,9 +1,9 @@
 # Tuning
 "업무에 바로 쓰는 SQL 튜닝" 학습내용입니다. 문제될 시 삭제하겠습니다.
 
-실습 데이터가 한글로 저장되어 있어서 docker container 에 접근 하여 한글을 사용해야합니다.
+실습 데이터가 한글로 저장되어 있는데, 따로 설정하지 않고 도커 컨테이너에 접근하여 한글을 입력하면 깨집니다.
 
-linux, mysql 에 한글이 깨지지 않도록 dockerfile 과 my.cnf 에 세팅해주어야 합니다. 
+한글이 깨지지 않도록 dockerfile 과 my.cnf 에 필요한 내용을 작성해주어야 합니다. 
 
 (intellij 사용 시, Driver and data source 에서 localhost:4406 으로 연결해줍니다.)
 
