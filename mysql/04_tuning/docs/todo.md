@@ -52,6 +52,48 @@ tinyint(1) 값에는 0, 1, 2 ... 등 여러 숫자가 들어갈 수 있는데, =
 
 형변환이 일어나서 안되는 걸로 추측...?
 
+###########################################################################
+
+**수정 (220627)**
+
+```
+# not use index
+explain
+select count(*)
+from post_log pl
+inner join post p on pl.post_id = p.id
+where
+    pl.base_date >= DATE("2022-05-01")
+    and pl.base_date < DATE("2022-05-02")
+    and p.is_used = true
+    and p.is_deleted = false;
+
+# use index
+explain
+select count(*)
+from post_log pl
+inner join post p on pl.post_id = p.id
+where
+    pl.base_date >= DATE("2022-05-01")
+    and pl.base_date < DATE("2022-05-02")
+    and p.is_used is true
+    and p.is_deleted is false;
+```
+
+tinyint 기준으로 = TRUE 는 1만, IS TRUE 0이 아닌 모든 수를 매칭합니다. 둘은 적용되는 연산이 다릅니다.
+
+explain 시, = TRUE 는 filtered 가 1, iIS TRUE 는 100입니다.
+
+기본적으로 최종 결과와 접근한 rows 가 비슷하고 filtered 가 더 높은게 좋습니다. 여기서는 filtered 가 낮은 즉, 더 적게 선택하는 것 처럼 보이는 = true 를 index 보다 먼저 접근하는 것을 효율적으로 판단하는 것으로 보입니다.
+
+**즉, 쿼리는 옵티마이저에 의해 우리가 원하는대로 동작하지 않을 수 있으므로 explain 으로 확인하고 hint 를 주는 것이 중요합니다.**
+
+* filtered 는 storage 엔진에서 가져온 것들 중 mysql 엔진에 의해 필터링 된 퍼센트를 의미하며, 실제 값이 아닌 통계 정보로부터 예측된 값을 의미합니다.
+
+
+
+
+
 ### like 의 인덱스...?
 실제로 어떻게 동작하는지 확인해보기
 **Todo. 4-8. 추가적으로 위 처럼 부분검색이 목적인 LIKE 절 대신 부등호 조건절이 우선하여 인덱스를 사용하므로 데이터 접근 범위를 줄일 수 있습니다.**
