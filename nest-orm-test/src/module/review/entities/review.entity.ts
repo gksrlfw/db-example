@@ -130,16 +130,16 @@ export class ReviewEntity {
   })
   photos: PhotoEntity[];
 
-  @BeforeInsert()
-  protected beforeInsert(): void {
-    this.createdAt = dayjs();
-    this.updatedAt = dayjs();
-  }
-
-  @BeforeUpdate()
-  protected beforeUpdate(): void {
-    this.updatedAt = dayjs();
-  }
+  // @BeforeInsert()
+  // protected beforeInsert(): void {
+  //   this.createdAt = dayjs();
+  //   this.updatedAt = dayjs();
+  // }
+  //
+  // @BeforeUpdate()
+  // protected beforeUpdate(): void {
+  //   this.updatedAt = dayjs();
+  // }
 
   /**
    *

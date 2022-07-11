@@ -10,6 +10,7 @@ import { PhotoEntity } from '@src/module/photo/entities/photo.entity';
 import { PhotoRepository } from '@src/module/photo/repositories/photo.repository';
 import { PhotoModule } from '@src/module/photo/photo.module';
 import { ReviewHelper } from '@src/module/review/review.helper';
+import { ReviewEntitySubscriber } from '@src/module/review/entities/review-entity.subscriber';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ReviewHelper } from '@src/module/review/review.helper';
     ReviewRepository,
     PointLogRepository,
     PhotoRepository,
+    ReviewEntitySubscriber,
   ],
   exports: [ReviewService, ReviewHelper],
 })

@@ -1,5 +1,5 @@
 #
-Nestjs Docs, TypeORM 쿼리 테스트, unit/e2e Test, Typescript 문법 등을 테스트합니다.
+Nestjs Docs, TypeORM 쿼리/exception 테스트, unit/e2e Test 등을 테스트합니다.
 
 ## 실행
 ### 로컬
